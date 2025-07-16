@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnmate/controller/ai_controller.dart';
 import 'package:learnmate/provider/chat_provider.dart';
+import 'package:learnmate/provider/session_provider.dart';
 import 'package:learnmate/provider/user_provider.dart';
 import 'package:lottie/lottie.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 
 class AiChatScreen extends ConsumerStatefulWidget {
   const AiChatScreen({super.key});
@@ -18,24 +20,19 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   TextEditingController titleController = TextEditingController();
   final AiController aiController = AiController();
 
-  List<Map<String,dynamic>> _sessions =[];
   bool isLoading = false;
   String? sessionId;
 
 
   Future<void> loadSessions()async{
-    final userId = ref.read(userProvider)!.id;
-    final fetchedSession = await aiController.fetchAllSession(userId);
-    print(fetchedSession);
-    setState(() {
-      _sessions = fetchedSession;
-    });
+    final user = ref.read(userProvider);
+    ref.read(sessionProvider.notifier).loadSessions(user!.id);
   }
 
 
-  Future<void> startNewSession(String title)async{
+  Future<void> startNewSession(String title,String userId)async{
     try{
-      final id = await aiController.createNewSession(title);
+      final id = await aiController.createNewSession(title: title,userId: userId);
       if(id!=null){
         setState(() {
           sessionId = id;
@@ -59,12 +56,13 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
 
   Future<void> askAI()async{
     final question = controller.text.trim();
+    final user = ref.read(userProvider);
     if(question.isEmpty) return ;
     setState(() {
       isLoading = true;
       controller.clear();
     });
-    await aiController.getAiResponse(question: question,sessionId:sessionId!,ref: ref);
+    await aiController.getAiResponse(question: question,sessionId:sessionId.toString(),ref: ref,userId: user!.id);
     setState(() {
       isLoading = false;
     });
@@ -75,11 +73,15 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     super.initState();
     loadSessions();
   }
+
+
   @override
   Widget build(BuildContext context) {
-    final _message = ref.watch(chatProvider);
+    final message0 = ref.watch(chatProvider);
+    final user = ref.read(userProvider);
+    final sessions = ref.watch(sessionProvider);
     return Scaffold(
-      backgroundColor:Theme.of(context).colorScheme.background,
+      backgroundColor:Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         iconTheme: IconThemeData(
             color: Theme.of(context).colorScheme.onSurface
@@ -95,7 +97,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         elevation: 1,
       ),
       drawer: Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         child: SafeArea(
           child: Column(
             children: [
@@ -143,23 +145,38 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                             ),),
                             content: TextField(
                               controller: titleController,
+                              enabled: true,
+                              cursorColor: Theme.of(context).colorScheme.onSurface,
                               decoration: InputDecoration(
                                 hintText: "Enter a title",
+                                enabled: true,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                hintStyle: GoogleFonts.lato(
+                                  fontSize: 18,
+                                  color: Theme.of(context).colorScheme.onSurface
+                                ),
+                                fillColor:Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                                filled: true,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                                 border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.onSurface
+                                  ),
                                   borderRadius: BorderRadius.circular(20),
-                                )
+                                ),
                               ),
                           ),
                             actions: [
                               TextButton(
 
                                   onPressed: ()async{
-                                    await startNewSession(titleController.text);
+                                    await startNewSession(titleController.text,user!.id);
                                     Navigator.pop(context);
                                     await loadSessions();
                                   },
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary)
+                                    backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.secondary)
                                   ),
                                   child: Text("Start",style: GoogleFonts.lato(
                                     fontSize: 25,
@@ -178,9 +195,9 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
           
               Expanded(
                 child: ListView.builder(
-                  itemCount: _sessions.length,
+                  itemCount: sessions.length,
                     itemBuilder: (context,index){
-                      final session = _sessions[index];
+                      final session = sessions[index];
                       return Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: ListTile(
@@ -195,14 +212,28 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           contentPadding: EdgeInsets.all(10),
-                          trailing: IconButton(
-                              onPressed: ()async{
-                                await deleteSession(session['sessionId']);
-                              },
-                              icon: Icon(
-                                Icons.delete,
-                                color:Theme.of(context).colorScheme.onSurface,
-                              )
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                  onPressed: ()async{
+                                  },
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color:Theme.of(context).colorScheme.onSurface,
+                                  )
+                              ),
+                              IconButton(
+                                  onPressed: ()async{
+                                    await deleteSession(session['sessionId']);
+                                    setState(() {});
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color:Theme.of(context).colorScheme.onSurface,
+                                  )
+                              ),
+                            ],
                           ),
                           tileColor:Theme.of(context).colorScheme.secondary,
                           shape: RoundedRectangleBorder(
@@ -234,7 +265,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       body: Column(
         children: [
           Expanded(
-              child: _message.isEmpty ?
+              child: message0.isEmpty ?
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -255,9 +286,9 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                 ],
               ) : ListView.builder(
                 shrinkWrap: true,
-                itemCount: _message.length,
+                itemCount: message0.length,
                   itemBuilder: (context,index){
-                    final message = _message[index];
+                    final message = message0[index];
                     final isUser = message.role == 'user';
                     return Align(
                       alignment: isUser ? Alignment.topRight : Alignment.topLeft,
@@ -268,14 +299,62 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: Text(
-                          message.text,
-                          style: GoogleFonts.montserrat(
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.w500
+                        child: MarkdownWidget(
+                            data: message.text,
+                          shrinkWrap: true,
+                          config: MarkdownConfig(
+                            configs: [
+                              H1Config(
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    letterSpacing: 2,
+                                  )
+                              ),
+                              H2Config(
+                                  style: GoogleFonts.lato(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    letterSpacing: 1.7,
+                                  )
+                              ),
+                              H3Config(
+                                  style: GoogleFonts.lato(
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    letterSpacing: 1.7,
+                                  )
+                              ),
+                              H4Config(
+                                  style: GoogleFonts.lato(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    letterSpacing: 1.7,
+                                  )
+                              ),
+                              H5Config(
+                                  style: GoogleFonts.lato(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    letterSpacing: 1.7,
+                                  )
+                              ),
+                              H6Config(
+                                  style: GoogleFonts.lato(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    letterSpacing: 1.7,
+                                  )
+                              ),
+                            ]
                           ),
-                        ),
+                        )
                       ),
                     );
                   }
@@ -284,16 +363,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
           if(isLoading)
              Padding(
               padding: EdgeInsets.all(8.0),
-              child:Row(
-                children: [
-                  CircularProgressIndicator(color: Theme.of(context).colorScheme.onSurface,),
-                  SizedBox(width: 10,),
-                  Text("Loading...",style: GoogleFonts.montserrat(
-                      color: Theme.of(context).colorScheme.onSurface
-                  ),
-                  )
-                ],
-              )
+              child: Lottie.asset('assets/animation/Cute bear dancing.json',height: 60,width: 60)
             ),
           SafeArea(
             child: Padding(
@@ -303,6 +373,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   Expanded(
                     child: TextField(
                       controller: controller,
+                      cursorColor: Theme.of(context).colorScheme.onSurface,
                       decoration: InputDecoration(
                         hintText: "Ask LearnMate anything...",
                         hintStyle: GoogleFonts.lato(
@@ -311,6 +382,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                         ),
                         fillColor:Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
                         filled: true,
+                        enabled: true,
                         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
@@ -329,7 +401,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                     ),
                     child: Icon(
                         Icons.arrow_upward,
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                       size: 35,
                     ),
                   ),
@@ -337,7 +409,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
               ),
             ),
           ),
-
         ],
       ),
     );

@@ -47,7 +47,7 @@ class _ChapterScreenState extends ConsumerState<ChapterScreen> {
                           MaterialPageRoute(
                               builder: (context)=>
                                   Scaffold(
-                                    backgroundColor: Theme.of(context).colorScheme.background,
+                                    backgroundColor: Theme.of(context).colorScheme.surface,
                                     appBar: AppBar(),
                                     body: SfPdfViewer.network(
                                       canShowTextSelectionMenu: true,

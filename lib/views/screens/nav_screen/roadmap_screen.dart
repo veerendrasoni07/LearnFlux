@@ -24,6 +24,11 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
   RoadMapController roadMapController = RoadMapController();
 
   String? timelimit;
+  bool isLoading = false;
+  Future<void> getRoadMap()async{
+    final userId = ref.read(userProvider)!.id;
+    ref.read(roadmapProvider.notifier).getRoadMap(userId: userId);
+  }
 
   final List<String> timeList = [
     '1 Months',
@@ -37,18 +42,42 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
     '3 Years',
     '4 Years'
   ];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    final userId = ref.read(userProvider)!.id;
-    roadMapController.fetchAllRoadMap(ref,userId);
+    isLoading = false;
+    getRoadMap();
   }
   @override
   Widget build(BuildContext context) {
     final roadmap = ref.watch(roadmapProvider);
     final user = ref.read(userProvider);
-    return DraggableHome(
+    return isLoading ? Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset(
+            'assets/animation/Robot-Bot 3D.json',
+            height: 300,
+            width: 300,
+          ),
+          SizedBox(height: 20,),
+          Text(
+            "RoadMap Is Generating, Please Wait!",
+            style: GoogleFonts.montserrat(
+              fontSize: 38,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onSurface,
+              letterSpacing: 1.7,
+              height: 1.5
+            ),
+            textAlign: TextAlign.center,
+          )
+        ],
+      )
+    ) : DraggableHome(
       appBarColor: Colors.lightBlueAccent,
         title: Text("RoadMap",style: GoogleFonts.montserrat(
           fontSize: 30,
@@ -191,6 +220,9 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                       ),
                     ),
                     onPressed: ()async {
+                      setState(() {
+                        isLoading = true;
+                      });
                       await roadMapController.getRoadMap(
                           goal: goalController.text,
                           timelimit: timelimit.toString(),
@@ -198,11 +230,10 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                           userId: user!.id,
                           ref: ref,
                         context: context
-                      ).then(((_){
-                        goalController.clear();
-                        problemController.clear();
-                        timelimit = null;
-                      }));
+                      ).whenComplete(()async{
+                        getRoadMap();
+                        isLoading = false;
+                      });
                     },
                   ),
                 ),

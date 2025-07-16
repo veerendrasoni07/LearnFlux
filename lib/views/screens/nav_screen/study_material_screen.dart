@@ -28,7 +28,7 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
         title : Text("Study Material")
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomDropdown<String>(
             onChanged: (value)async{
@@ -45,8 +45,8 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
             initialItem: user!.studentClass,
             items: classes,
             decoration: CustomDropdownDecoration(
-                closedFillColor: Theme.of(context).colorScheme.background,
-                expandedFillColor: Theme.of(context).colorScheme.background,
+                closedFillColor: Theme.of(context).colorScheme.surface,
+                expandedFillColor: Theme.of(context).colorScheme.surface,
                 hintStyle: GoogleFonts.lato(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -55,56 +55,92 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
                 )
             ),
           ),
-          InkWell(
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=> NotesPdfScreen(noteType: "Detailed Notes")
-                  )
-              );
-            },
-            child: Container(
-              height:50,
-              padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.grey
-              ),
-              child: Center(child: Text("Detailed Notes")),
-            ),
-          ),
-          SizedBox(height: 10,),
-          InkWell(
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=> NotesPdfScreen(noteType: "Short Notes")
-                  )
-              );
-            },
-            child: Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.grey
-              ),
-              child: Center(child: Text("Short Notes")),
-            ),
-          ),
-          SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=> NotesPdfScreen(noteType: "Detailed Notes")
+                        )
+                    );
+                  },
+                  child: Container(
+                    height:50,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Center(child: Text("Detailed Notes",style: GoogleFonts.lato(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      letterSpacing: 1.7,
+                    ),)),
+                  ),
+                ),
+                SizedBox(height: 20,),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=> NotesPdfScreen(noteType: "Short Notes")
+                        )
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Center(
+                        child: Text(
+                          "Short Notes",
+                          style: GoogleFonts.lato(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            letterSpacing: 1.7,
+                          ),
+                        )
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20,),
 
-          InkWell(
-            onTap: (){
-            },
-            child: Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.grey
-              ),
-              child: Center(child: Text("Important Questions")),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>NotesPdfScreen(noteType: 'Important Questions')));
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Center(
+                        child: Text(
+                            "Important Questions",
+                          style: GoogleFonts.lato(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            letterSpacing: 1.7,
+                          ),
+                        )
+                    ),
+                  ),
+                )
+              ],
             ),
-          )
+          ),
+          Spacer()
         ],
       ),
     );

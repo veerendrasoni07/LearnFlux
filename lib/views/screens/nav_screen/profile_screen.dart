@@ -67,24 +67,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             ),
                           )
                       ),
-                      Positioned(
-                        bottom:5,
-                          right:25,
-                          child: InkWell(
-                            onTap: (){
-                              _pickImageFromGallery();
-                            },
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.grey.shade900,
-                              child: Icon(
-                                Icons.edit,
-                                size:20 ,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                      )
+                      // Positioned(
+                      //   bottom:5,
+                      //     right:25,
+                      //     child: InkWell(
+                      //       onTap: (){
+                      //         _pickImageFromGallery();
+                      //       },
+                      //       child: CircleAvatar(
+                      //         radius: 20,
+                      //         backgroundColor: Colors.grey.shade900,
+                      //         child: Icon(
+                      //           Icons.edit,
+                      //           size:20 ,
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //     )
+                      // )
                     ],
                   ),
                   SizedBox(height: 20,),

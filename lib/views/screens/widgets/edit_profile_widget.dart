@@ -96,8 +96,8 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                   hintText: 'Select Board',
                   items: boards,
                   decoration: CustomDropdownDecoration(
-                      closedFillColor:Theme.of(context).colorScheme.background,
-                      expandedFillColor: Theme.of(context).colorScheme.background,
+                      closedFillColor:Theme.of(context).colorScheme.surface,
+                      expandedFillColor: Theme.of(context).colorScheme.surface,
                       hintStyle: GoogleFonts.lato(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -119,8 +119,8 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                   hintText: 'Select Class',
                   items: classes,
                   decoration: CustomDropdownDecoration(
-                      closedFillColor: Theme.of(context).colorScheme.background,
-                      expandedFillColor: Theme.of(context).colorScheme.background,
+                      closedFillColor: Theme.of(context).colorScheme.surface,
+                      expandedFillColor: Theme.of(context).colorScheme.surface,
                       hintStyle: GoogleFonts.lato(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -142,7 +142,7 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                 TextField(
                     controller: hobbyController,
                     decoration: InputDecoration(
-                      hintText: "Enter Your City",
+                      hintText: "Enter Your Hobby",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

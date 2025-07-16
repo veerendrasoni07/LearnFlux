@@ -53,6 +53,7 @@ dependencies:
   flutter_pdfview: ^1.4.1+1
   syncfusion_flutter_pdfviewer: ^30.1.39
   lottie: ^3.3.1
+  flutter_slidable: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +87,8 @@ flutter:
     - assets/animation/ai_powered_marketing_tool.json
     - assets/animation/man_and_robot.json
     - assets/animation/voice_assistant _ai_chatbot.json
+    - assets/animation/Cute bear dancing.json
+    - assets/animation/Robot-Bot 3D.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -48,9 +48,9 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
                   TextButton(
                     onPressed: ()=>Navigator.pop(context),
                     style:ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      shape: MaterialStateProperty.all(
+                      backgroundColor: WidgetStateProperty.all(Colors.red),
+                      foregroundColor: WidgetStateProperty.all(Colors.white),
+                      shape: WidgetStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)
                         )
@@ -61,9 +61,9 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
                   SizedBox(width:10,),
                   TextButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green),
-                      shadowColor: MaterialStateProperty.all(Colors.black),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                      shadowColor: WidgetStateProperty.all(Colors.black),
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)
                       ))
                     ),

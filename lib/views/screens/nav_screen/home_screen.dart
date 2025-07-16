@@ -9,7 +9,6 @@ import 'package:learnmate/provider/user_provider.dart';
 import 'package:learnmate/views/ai_chat_screen.dart';
 import 'package:learnmate/views/goal_tracker/views/habit_home_page.dart';
 import 'package:learnmate/views/screens/nav_screen/roadmap_screen.dart';
-import 'package:learnmate/views/screens/nav_screen/notes_pdf_screen.dart';
 import 'package:learnmate/views/screens/nav_screen/study_material_screen.dart';
 import 'package:learnmate/views/screens/widgets/home_container_widget.dart';
 import 'package:learnmate/views/screens/widgets/info_screen.dart';
@@ -61,7 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final theme = ref.watch(themeProvider.notifier);
     print(userData!.studentClass);
     return DraggableHome(
-      fullyStretchable: true,
+      fullyStretchable: false,
       appBarColor: Colors.blueAccent,
         drawer: Drawer(
           child: Column(
@@ -121,7 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               style: GoogleFonts.montserrat(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 letterSpacing: 1.7,
                 height: 1.5
               ),

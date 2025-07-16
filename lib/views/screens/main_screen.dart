@@ -4,7 +4,6 @@ import 'package:learnmate/views/ai_chat_screen.dart';
 import 'package:learnmate/views/screens/nav_screen/home_screen.dart';
 import 'package:learnmate/views/screens/nav_screen/profile_screen.dart';
 import 'package:learnmate/views/screens/nav_screen/roadmap_screen.dart';
-import 'package:learnmate/views/screens/nav_screen/notes_pdf_screen.dart';
 import 'package:learnmate/views/screens/nav_screen/study_material_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -36,7 +35,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           barAnimation: BarAnimation.fade,
           iconStyle: IconStyle.animated,
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 6,
         currentIndex: _selectedIndex,
         hasNotch: true,

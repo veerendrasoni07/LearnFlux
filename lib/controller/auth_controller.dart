@@ -105,6 +105,82 @@ class AuthController{
   }
 
 
+  Future<void> sendOtp({
+    required String email,
+    required BuildContext context,
+    required WidgetRef ref
+  })async{
+    try{
+
+      http.Response response = await http.post(
+          Uri.parse('$uri/api/send-otp'),
+          body: jsonEncode({
+            'email':email,
+          }),
+          headers: <String,String>{
+            'Content-Type':'application/json; charset=UTF-8'
+          }
+      );
+
+      manageHttpRequest(
+          response: response,
+          context: context,
+          onSuccess: ()async{
+            showSnackBar(context, "Otp Sent Successfully","Otp sent to you email", ContentType.help);
+          }
+      );
+    }catch(e){
+      showSnackBar(context, "Login Failed", e.toString(), ContentType.failure);
+    }
+  }
+
+  // verify via otp
+  Future<void> verifyOtp({
+    required String email,
+    required String otp,
+    required BuildContext context,
+    required WidgetRef ref
+  })async{
+    try{
+
+      http.Response response = await http.post(
+          Uri.parse('$uri/api/verify-otp'),
+          body: jsonEncode({
+            'email':email,
+            'otp':otp,
+          }),
+          headers: <String,String>{
+            'Content-Type':'application/json; charset=UTF-8'
+          }
+      );
+
+      manageHttpRequest(
+          response: response,
+          context: context,
+          onSuccess: ()async{
+
+            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+            String token = await jsonDecode(response.body)['token'];
+
+            await sharedPreferences.setString('auth-token',token );
+
+            final userJson = jsonEncode(jsonDecode(response.body)['user']);
+
+            ref.read(userProvider.notifier).setUser(userJson);
+
+            await sharedPreferences.setString('user', userJson);
+
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>MainScreen()), (route)=>false);
+          }
+      );
+    }catch(e){
+      showSnackBar(context, "Login Failed", e.toString(), ContentType.failure);
+    }
+  }
+
+
+
   Future<void> signOut({
     required BuildContext context,
     required WidgetRef ref,

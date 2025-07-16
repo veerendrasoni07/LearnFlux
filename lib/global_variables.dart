@@ -1,1 +1,1 @@
-String uri = 'http://192.168.29.41:3000';
+String uri = 'https://learnflux-project-production.up.railway.app';

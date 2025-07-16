@@ -1,8 +1,6 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnmate/controller/auth_controller.dart';
 import 'package:learnmate/controller/subject_controller.dart';
 import 'package:learnmate/models/chapters.dart';
 import 'package:learnmate/provider/subject_provider.dart';
@@ -50,7 +48,7 @@ class _NotesPdfScreenState extends ConsumerState<NotesPdfScreen> {
           color: Theme.of(context).colorScheme.onSurface
         ),),
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

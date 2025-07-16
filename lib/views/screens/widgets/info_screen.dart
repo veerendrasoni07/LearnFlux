@@ -14,8 +14,8 @@ class InfoScreen extends ConsumerWidget {
     TextEditingController cityController = TextEditingController();
     TextEditingController hobbyController = TextEditingController();
     final AuthController authController = AuthController();
-    String? _selectedBoard;
-    String? _selectedClass;
+    String? selectedBoard;
+    String? selectedClass;
     List<String> boards = [
       'CBSE',
       'MP Board',
@@ -50,7 +50,7 @@ class InfoScreen extends ConsumerWidget {
             ),),
             CustomDropdown<String>(
               onChanged: (value){
-                _selectedBoard = value!;
+                selectedBoard = value!;
               },
               hintText: 'Select Board',
               items: boards,
@@ -73,7 +73,7 @@ class InfoScreen extends ConsumerWidget {
             ),),
             CustomDropdown<String>(
               onChanged: (value){
-                _selectedClass = value!;
+                selectedClass = value!;
               },
               hintText: 'Select Class',
               items: classes,
@@ -140,8 +140,8 @@ class InfoScreen extends ConsumerWidget {
                   onPressed: (){
                     authController.updateStudentDetail(
                         userId: ref.read(userProvider)!.id,
-                        board: _selectedBoard!,
-                        studentClass: _selectedClass!,
+                        board: selectedBoard!,
+                        studentClass: selectedClass!,
                         state: stateController.text,
                         city: cityController.text,
                         interest: hobbyController.text,
