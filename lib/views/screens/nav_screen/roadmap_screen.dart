@@ -203,20 +203,19 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                     color: Colors.lightBlueAccent.shade100,
                     gradient: LinearGradient(
                         colors: [
-                          Colors.lightBlueAccent.shade100,
-                          Colors.blue.shade700
+                          Colors.lightBlueAccent.shade200,
+                          Colors.blue.shade800
                           ]
                     )
                   ),
                   child: TextButton(
                     child: Text(
                       "Generate RoadMap",
-                      style: GoogleFonts.grapeNuts(
-                        fontSize: 35,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         letterSpacing: 1.7,
-                        height: 2
                       ),
                     ),
                     onPressed: ()async {

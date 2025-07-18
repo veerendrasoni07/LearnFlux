@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnmate/controller/auth_controller.dart';
+import 'package:learnmate/views/screens/authentication/otp_screen.dart';
 import 'package:learnmate/views/screens/authentication/signup_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -212,9 +213,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    icon: Icon(Icons.g_mobiledata, color: Colors.white,size: 50,),
                     label: Text(
-                      "Continue with Google",
+                      "Login via OTP",
                       style: GoogleFonts.montserrat(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 24),
                     ),
                     style: OutlinedButton.styleFrom(
@@ -224,7 +224,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>OtpScreen()));
+                    },
                   ),
                 ),
 

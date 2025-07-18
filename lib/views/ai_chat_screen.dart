@@ -363,7 +363,12 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
           if(isLoading)
              Padding(
               padding: EdgeInsets.all(8.0),
-              child: Lottie.asset('assets/animation/Cute bear dancing.json',height: 60,width: 60)
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Lottie.asset('assets/animation/Cute bear dancing.json',height: 80,width: 80),
+                ],
+              )
             ),
           SafeArea(
             child: Padding(

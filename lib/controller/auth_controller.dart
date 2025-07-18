@@ -108,31 +108,56 @@ class AuthController{
   Future<void> sendOtp({
     required String email,
     required BuildContext context,
-    required WidgetRef ref
-  })async{
-    try{
-
-      http.Response response = await http.post(
-          Uri.parse('$uri/api/send-otp'),
-          body: jsonEncode({
-            'email':email,
-          }),
-          headers: <String,String>{
-            'Content-Type':'application/json; charset=UTF-8'
-          }
+    required WidgetRef ref,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$uri/api/send-otp'),
+        body: jsonEncode({'email': email}),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       );
 
-      manageHttpRequest(
-          response: response,
-          context: context,
-          onSuccess: ()async{
-            showSnackBar(context, "Otp Sent Successfully","Otp sent to you email", ContentType.help);
-          }
-      );
-    }catch(e){
-      showSnackBar(context, "Login Failed", e.toString(), ContentType.failure);
+      // 🔍 Log raw response
+      print("Response Status: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      // ✅ Safely parse JSON (with fallback)
+      final Map<String, dynamic> data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final bool success = data['success'] ?? false;
+
+        if (success) {
+          // Call your reusable function
+          manageHttpRequest(
+            response: response,
+            context: context,
+            onSuccess: () async {
+              showSnackBar(
+                context,
+                "OTP Sent",
+                "OTP sent to your email successfully.",
+                ContentType.help,
+              );
+            },
+          );
+        } else {
+          // Failure even with 200 response
+          throw Exception(data['msg'] ?? "Failed to send OTP");
+        }
+      } else {
+        // For status codes like 400, 500
+        throw Exception(data['msg'] ?? "Server Error: ${response.statusCode}");
+      }
+    } catch (e) {
+      // 🚨 Safely catch and show any error
+      print("OTP Send Error: $e");
+      showSnackBar(context, "OTP Error", e.toString(), ContentType.failure);
     }
   }
+
 
   // verify via otp
   Future<void> verifyOtp({

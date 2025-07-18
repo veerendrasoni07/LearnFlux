@@ -1,1 +1,1 @@
-String uri = 'https://learnflux-project-production.up.railway.app';
+String uri = 'https://learnflux-production.up.railway.app';

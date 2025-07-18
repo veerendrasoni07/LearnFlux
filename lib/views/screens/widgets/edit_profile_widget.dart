@@ -77,6 +77,13 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                 TextField(
                     controller: nameController,
                     decoration: InputDecoration(
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                       hintText: "Enter Your New Name",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -143,6 +150,13 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                     controller: hobbyController,
                     decoration: InputDecoration(
                       hintText: "Enter Your Hobby",
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -160,6 +174,13 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                 TextField(
                     controller: cityController,
                     decoration: InputDecoration(
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                       hintText: "Enter Your City",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -178,6 +199,13 @@ class _EditProfileWidgetState extends ConsumerState<EditProfileWidget> {
                 TextField(
                     controller: stateController,
                     decoration: InputDecoration(
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                       hintText: "Enter Your State",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
