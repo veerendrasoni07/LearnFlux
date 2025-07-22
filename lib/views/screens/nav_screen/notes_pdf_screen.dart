@@ -36,8 +36,7 @@ class _NotesPdfScreenState extends ConsumerState<NotesPdfScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final subjects = ref.read(subjectProvider);
-    final subjectsWatcher = ref.watch(subjectProvider);
+    final subjects = ref.watch(subjectProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

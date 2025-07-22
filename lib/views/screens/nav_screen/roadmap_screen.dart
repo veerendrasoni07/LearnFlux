@@ -137,6 +137,12 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                     SizedBox(height: 8,),
                     TextField(
                       controller: goalController,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        letterSpacing: 1.7,
+                      ),
                       decoration: InputDecoration(
                         hintText: "Enter Your Goal",
                         border: OutlineInputBorder(
@@ -155,6 +161,12 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                     SizedBox(height: 8,),
                     TextField(
                       controller: problemController,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        letterSpacing: 1.7,
+                      ),
                       decoration: InputDecoration(
                         hintText: "Enter Your Problem",
                         border: OutlineInputBorder(
@@ -163,7 +175,8 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                       ),
                     ),
                     SizedBox(height: 8,),
-                    Text("What is the timeframe for completing your goal?",style: GoogleFonts.aBeeZee(
+                    Text("What is the timeframe for completing your goal?",
+                      style: GoogleFonts.aBeeZee(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,

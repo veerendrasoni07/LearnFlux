@@ -116,9 +116,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Hey ${userData.fullname}!\nWelcome to LearnMate!",
-              style: GoogleFonts.montserrat(
-                  fontSize: 28,
+              "Hey ${userData.fullname}!",
+              style: GoogleFonts.openSans(
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.onSurface,
                 letterSpacing: 1.7,
@@ -126,91 +126,92 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
           ),
-          Column(
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0,bottom: 12.0),
+            child: Text(
+              "Welcome to LearnFlux!",
+              style: GoogleFonts.openSans(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                letterSpacing: 1.7,
+              ),
+            ),
+          ),
+          Wrap(
+            spacing: 16,
+            runSpacing: 16,
+            alignment: WrapAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context)=>StudyMaterialScreen()
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context)=>StudyMaterialScreen()
+                                  )
+                              );
+                            },
+                            child: HomeContainerWidget(
+                                title: 'Notes',
+                                icon: Icons.upload
                             )
-                        );
-                      },
-                        child: HomeContainerWidget(
-                            title: 'Notes',
-                            icon: Icons.upload
-                        )
-                    ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: InkWell(
+                            onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>HabitHomePage())),
+                            child: HomeContainerWidget(
+                                title: 'New Goal',
+                                icon: Icons.add
+                            )
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: InkWell(
-                      onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>HabitHomePage())),
-                        child: HomeContainerWidget(
-                            title: 'New Goal',
-                            icon: Icons.add
-                        )
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context)=>AiChatScreen()
+                                  )
+                              );
+                            },
+                            child: HomeContainerWidget(
+                                title: 'AI Chat',
+                                icon: Icons.mark_chat_unread
+                            )
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RoadmapScreen()));
+                            },
+                            child: HomeContainerWidget(
+                                title: 'View RoadMap',
+                                icon: Icons.location_on_rounded
+                            )
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context)=>AiChatScreen()
-                            )
-                        );
-                      },
-                        child: HomeContainerWidget(
-                            title: 'AI Chat',
-                            icon: Icons.mark_chat_unread
-                        )
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>RoadmapScreen()));
-                      },
-                        child: HomeContainerWidget(
-                            title: 'View RoadMap',
-                            icon: Icons.location_on_rounded
-                        )
-                    ),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: ()async{
-                  await AuthController().signOut(context: context, ref: ref);
-                },
-                child: ListTile(
-                  title: Text("Logout",style: GoogleFonts.montserrat(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      letterSpacing: 2.5
-                  ),),
-                  trailing: Icon(
-                    Icons.logout,
-                    size: 30,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
               )
             ],
           )

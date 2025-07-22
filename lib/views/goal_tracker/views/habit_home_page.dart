@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learnmate/views/goal_tracker/components/heat_map.dart';
 import 'package:learnmate/views/goal_tracker/database/habit_database.dart';
 import 'package:learnmate/views/goal_tracker/models/habit.dart';
-import 'package:learnmate/views/goal_tracker/utils/habit_home_drawer.dart';
 import 'package:learnmate/views/goal_tracker/utils/habit_tile.dart';
 import 'package:learnmate/views/goal_tracker/utils/habit_utils.dart';
 
@@ -96,8 +95,8 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
     List<Habit> currentHabits = habit.currentHabits;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      drawer: HabitHomeDrawer(),
       appBar: AppBar(
+        leading: IconButton(onPressed: ()=>Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_new)),
         title: Text('Habit Tracker',style: GoogleFonts.montserrat(
           fontSize: 28,
           fontWeight: FontWeight.bold,

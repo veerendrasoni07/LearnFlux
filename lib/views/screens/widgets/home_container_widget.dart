@@ -9,8 +9,8 @@ class HomeContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
-      width: 180,
+      height: MediaQuery.of(context).size.height * 0.2,
+      width: MediaQuery.of(context).size.width * 0.4,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
@@ -36,11 +36,12 @@ class HomeContainerWidget extends StatelessWidget {
           ),
           Text(
             title,
-            style: GoogleFonts.adventPro(
-                fontSize: 30,
+            style: GoogleFonts.montserrat(
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.onSurface,
             ),
+            textAlign: TextAlign.center,
           )
         ],
       ),

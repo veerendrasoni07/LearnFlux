@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnmate/controller/auth_controller.dart';
+import 'package:learnmate/views/screens/details/notes/widgets/scrape_pdf_screeen.dart';
 import 'package:learnmate/views/screens/nav_screen/notes_pdf_screen.dart';
 
 import '../../../provider/user_provider.dart';
@@ -25,7 +26,17 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
     final user = ref.read(userProvider);
     return Scaffold(
       appBar : AppBar(
-        title : Text("Study Material")
+        centerTitle: true,
+        title : Text(
+          "Study Material",
+          style: GoogleFonts.montserrat(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onSurface,
+            letterSpacing: 1.7,
+            height: 1.5
+          ),
+        )
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +58,7 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
             decoration: CustomDropdownDecoration(
                 closedFillColor: Theme.of(context).colorScheme.surface,
                 expandedFillColor: Theme.of(context).colorScheme.surface,
-                hintStyle: GoogleFonts.lato(
+                hintStyle: GoogleFonts.montserrat(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.onSurface,
@@ -71,10 +82,13 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
                     height:50,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(20)
                     ),
-                    child: Center(child: Text("Detailed Notes",style: GoogleFonts.lato(
+                    child: Center(
+                        child: Text(
+                          "Detailed Notes",
+                          style: GoogleFonts.montserrat(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -95,13 +109,13 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(20)
                     ),
                     child: Center(
                         child: Text(
                           "Short Notes",
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.montserrat(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.onSurface,
@@ -121,13 +135,13 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(20)
                     ),
                     child: Center(
                         child: Text(
                             "Important Questions",
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.montserrat(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.onSurface,
@@ -139,6 +153,36 @@ class _StudyMaterialScreenState extends ConsumerState<StudyMaterialScreen> {
                 )
               ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              "Get Top 10 Best Notes Pdf Of Any Subject.",
+              style: GoogleFonts.montserrat(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+                letterSpacing: 1,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.greenAccent,
+            ),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>ScrapePdfScreeen()));
+              },
+              child: Text(
+                "Get Pdfs",
+                style: GoogleFonts.openSans(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                  letterSpacing: 1,
+                ),
+              )
           ),
           Spacer()
         ],

@@ -147,7 +147,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ListTile(
                       title: Text(user.studentClass.isEmpty? "Board : ---" : "Board : ${user.board}",
                         style: GoogleFonts.montserrat(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,
                         letterSpacing: 2.5
@@ -161,7 +161,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ListTile(
                       title: Text(user.studentClass.isEmpty? "Class : ---" : "Class : ${user.studentClass}",
                         style: GoogleFonts.montserrat(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,
                         letterSpacing: 2.5
@@ -175,7 +175,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ListTile(
                       title: Text(user.interest.isEmpty? "Hobby : ---" : "Hobby : ${user.interest}",
                         style: GoogleFonts.montserrat(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,
                         letterSpacing: 2.5,
@@ -190,7 +190,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),ListTile(
                       title: Text(user.city.isEmpty? "City : ---" : "City : ${user.city}",
                         style: GoogleFonts.montserrat(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,
                         letterSpacing: 2.5
@@ -205,7 +205,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                     ListTile(
                       title: Text(user.city.isEmpty? "State : ---" : "State : ${user.state}",style: GoogleFonts.montserrat(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,
                         letterSpacing: 2.5
@@ -222,7 +222,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       },
                       child: ListTile(
                         title: Text("Logout",style: GoogleFonts.montserrat(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.onSurface,
                           letterSpacing: 2.5

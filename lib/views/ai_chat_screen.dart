@@ -77,7 +77,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final message0 = ref.watch(chatProvider);
+    final messages = ref.watch(chatProvider);
     final user = ref.read(userProvider);
     final sessions = ref.watch(sessionProvider);
     return Scaffold(
@@ -86,7 +86,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         iconTheme: IconThemeData(
             color: Theme.of(context).colorScheme.onSurface
         ),
-        title: Text("LearnMate AI",style: GoogleFonts.montserrat(
+        title: Text("LearnFlux AI",style: GoogleFonts.montserrat(
           fontSize: 30,
           color: Theme.of(context).colorScheme.onSurface,
           fontWeight: FontWeight.bold,
@@ -265,30 +265,32 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       body: Column(
         children: [
           Expanded(
-              child: message0.isEmpty ?
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Lottie.asset(
-                    'assets/animation/ai_powered_marketing_tool.json',
-                    height: 300,
-                    width: 300
-                  ),
-                  Text("Let's Start A New Session !",
-                    style: GoogleFonts.montserrat(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                    letterSpacing: 2,
+              child: messages.isEmpty ?
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/animation/ai_powered_marketing_tool.json',
+                      height: 300,
+                      width: 300
                     ),
-                    textAlign: TextAlign.center,
-                  )
-                ],
+                    Text("Let's Start A New Session !",
+                      style: GoogleFonts.montserrat(
+                      fontSize: 48,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      letterSpacing: 2,
+                      ),
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
               ) : ListView.builder(
                 shrinkWrap: true,
-                itemCount: message0.length,
+                itemCount: messages.length,
                   itemBuilder: (context,index){
-                    final message = message0[index];
+                    final message = messages[index];
                     final isUser = message.role == 'user';
                     return Align(
                       alignment: isUser ? Alignment.topRight : Alignment.topLeft,
@@ -378,12 +380,19 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   Expanded(
                     child: TextField(
                       controller: controller,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.7
+                      ),
                       cursorColor: Theme.of(context).colorScheme.onSurface,
                       decoration: InputDecoration(
-                        hintText: "Ask LearnMate anything...",
-                        hintStyle: GoogleFonts.lato(
-                          fontSize: 18,
-                          color: Theme.of(context).colorScheme.onSurface
+                        hintText: "Ask LearnFlux anything...",
+                        hintStyle: GoogleFonts.montserrat(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontWeight: FontWeight.w600
                         ),
                         fillColor:Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
                         filled: true,
