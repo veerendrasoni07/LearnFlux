@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnmate/controller/auth_controller.dart';
 import 'package:learnmate/provider/theme_provider.dart';
 import 'package:learnmate/provider/user_provider.dart';
 import 'package:learnmate/views/ai_chat_screen.dart';
@@ -55,10 +54,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final userData = ref.read(userProvider);
-    final user = ref.watch(userProvider);
+    final userData = ref.watch(userProvider);
     final theme = ref.watch(themeProvider.notifier);
-    print(userData!.studentClass);
     return DraggableHome(
       fullyStretchable: false,
       appBarColor: Colors.blueAccent,
@@ -103,7 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                  'assets/images/Learnmate_ai_logo.jpg',
+                  'assets/images/learnflux_logo.png',
                   height: 250,
                   width: 250,
                   fit: BoxFit.cover,
@@ -116,7 +113,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Hey ${userData.fullname}!",
+              "Hey ${userData!.fullname}!",
               style: GoogleFonts.openSans(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

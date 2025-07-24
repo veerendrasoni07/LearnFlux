@@ -36,16 +36,19 @@ class ChapterWidget extends ConsumerWidget {
             ),
             child: Center(child: Icon(icon,color: Colors.white)),
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 5,),
           Center(
-            child: Text(
-              title,
-              style: GoogleFonts.lato(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style: GoogleFonts.lato(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           )
         ],

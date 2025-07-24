@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnmate/views/goal_tracker/components/heat_map.dart';
 import 'package:learnmate/views/goal_tracker/database/habit_database.dart';
@@ -15,7 +16,9 @@ class HabitHomePage extends ConsumerStatefulWidget {
 }
 
 class _HabitHomePageState extends ConsumerState<HabitHomePage> {
+
   TextEditingController habitController = TextEditingController();
+
   void showDialogBox()async{
     showDialog(
         context: context, 
@@ -68,6 +71,8 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
                     ),
                       onPressed: ()async{
                         await ref.read(habitProvider.notifier).addHabit(habitController.text);
+                        habitController.clear();
+                        Navigator.pop(context);
                       },
                       child: Text('Save')
                   )
@@ -81,6 +86,70 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
   void checkHabitOnOff(bool? value,int id){
     ref.read(habitProvider.notifier).updateTheHabitCompletion(id, value!);
   }
+
+
+  final TextEditingController habitNameController = TextEditingController();
+
+
+  void editHabitName(int id,String currentHabit)async{
+    habitNameController.text = currentHabit;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_)=>AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: habitNameController,
+                decoration: InputDecoration(
+                    hintText: "Enter Your Goal",
+                    hintStyle: GoogleFonts.aBeeZee(
+                        fontSize: 20,
+                    )
+                )
+              ),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: ()=>Navigator.pop(context),
+                    style:ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Colors.red),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        shape: WidgetStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                            )
+                        )
+                    ) ,
+                    child: Text('Cancel'),
+                  ),
+                  SizedBox(width:10,),
+                  TextButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(Colors.green),
+                          shadowColor: WidgetStateProperty.all(Colors.black),
+                          shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                          ))
+                      ),
+                      onPressed: ()async{
+                        await ref.read(habitProvider.notifier).updateHabitName(id, habitNameController.text.trim());
+                        Navigator.pop(context);
+                      },
+                      child: Text('Save')
+                  )
+                ],
+              )
+            ],
+          ),
+        )
+    );
+  }
+
+
 
   @override
   void initState() {
@@ -107,12 +176,6 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
         centerTitle: true,
         elevation: 1,
         backgroundColor: Colors.transparent,
-        actions: [
-          IconButton(
-            onPressed: (){},
-            icon: const Icon(Icons.settings),
-          )
-        ]
       ),
       body:ListView(
         children: [
@@ -125,10 +188,26 @@ class _HabitHomePageState extends ConsumerState<HabitHomePage> {
               itemBuilder: (context,index){
                 final habit = currentHabits[index];
                 final isCompletedToday = isTodaysHabitCompleted(habit.completedDates);
-                return HabitTile(
-                    onChanged: (value)=>checkHabitOnOff(value, habit.id),
-                    text: habit.habitName.toString(),
-                    isCompletedToday: isCompletedToday
+                return Slidable(
+                  endActionPane: ActionPane(
+                    motion: ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context)=>ref.read(habitProvider.notifier).deleteHabit(habit.id),
+                        icon: Icons.delete,
+                        backgroundColor: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      )
+                    ]
+                  ),
+                  child: HabitTile(
+                      onChanged: (value)=>checkHabitOnOff(value, habit.id),
+                      text: habit.habitName.toString(),
+                      isCompletedToday: isCompletedToday,
+                    onEdit: ()async{
+                        return editHabitName(habit.id,habit.habitName!);
+                    } ,
+                  ),
                 );
               }
           ),

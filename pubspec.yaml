@@ -84,7 +84,7 @@ flutter:
   assets:
     - assets/images/AI_teaching.jpg
     - assets/images/login_image.jpg
-    - assets/images/Learnmate_ai_logo.jpg
+    - assets/images/learnflux_logo.png
     - assets/animation/ai_powered_marketing_tool.json
     - assets/animation/man_and_robot.json
     - assets/animation/voice_assistant _ai_chatbot.json

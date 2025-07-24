@@ -53,6 +53,16 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       print('Error occurred : $e');
     }
   }
+  TextEditingController newChatName = TextEditingController();
+
+  Future<void> updateChatName(String id)async{
+    try{
+      ref.read(sessionProvider.notifier).changeChatName(id, newChatName.text.trim());
+    }
+    catch(e){
+      print(e);
+    }
+  }
 
   Future<void> askAI()async{
     final question = controller.text.trim();
@@ -192,7 +202,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                     label: Text("New Chat",style: GoogleFonts.quicksand(color: Theme.of(context).colorScheme.onSurface,fontWeight: FontWeight.bold,fontSize: 20),)
                 ),
               ),
-          
+
               Expanded(
                 child: ListView.builder(
                   itemCount: sessions.length,
@@ -217,6 +227,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                             children: [
                               IconButton(
                                   onPressed: ()async{
+                                    await updateChatName(session['_id']);
                                   },
                                   icon: Icon(
                                     Icons.edit,

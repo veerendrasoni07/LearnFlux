@@ -32,6 +32,38 @@ class SessionProvider extends StateNotifier<List<Map<String,dynamic>>>{
     state = state.where((s)=> s['sessionId'] != sessionId).toList();
   }
 
+  Future<void> changeChatName(String id,String newChatName)async{
+    try{
+      http.Response response = await http.put(
+          Uri.parse('$uri/api/update-chat-name?sessionId=$id&newName=$newChatName'),
+        headers: <String,String>{
+            'Content-Type':'application/json; charset=UTF-8'
+        }
+      );
+
+      if(response.statusCode == 200){
+        final data = jsonDecode(response.body);
+        final updatedSession = state.map((session){
+          if(session['_id']==id){
+            return {
+              ...session,
+              'title':newChatName
+            };
+          }
+          return session;
+        }).toList();
+        state = updatedSession;
+      }
+      else{
+        throw Exception("Error occurred while updating chat name");
+      }
+
+    }
+    catch(e){
+      throw Exception("Error occurred : $e");
+    }
+  }
+
 
 
 }

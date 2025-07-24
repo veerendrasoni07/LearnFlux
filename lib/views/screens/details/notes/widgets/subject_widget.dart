@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnmate/provider/subject_provider.dart';
 
 class SubjectWidget extends ConsumerWidget {
   final String title;
@@ -36,10 +35,11 @@ class SubjectWidget extends ConsumerWidget {
             ),
             child: Center(child: Icon(icon,color: Colors.white)),
           ),
+          SizedBox(height: 10,),
           Text(
             title,
             style: GoogleFonts.lato(
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.onSurface,
             ),
