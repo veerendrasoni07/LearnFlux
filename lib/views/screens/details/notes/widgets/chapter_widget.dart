@@ -11,7 +11,6 @@ class ChapterWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     return Container(
-      height: 90,
       width: 90,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
@@ -24,34 +23,37 @@ class ChapterWidget extends ConsumerWidget {
             )
           ]
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade700,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(child: Icon(icon,color: Colors.white)),
-          ),
-          SizedBox(height: 5,),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                title,
-                style: GoogleFonts.lato(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                textAlign: TextAlign.center,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade700,
+                borderRadius: BorderRadius.circular(20),
               ),
+              child: Center(child: Icon(icon,color: Colors.white)),
             ),
-          )
-        ],
+            SizedBox(height: 5,),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  title,
+                  style: GoogleFonts.lato(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -18,6 +18,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   final AuthController authController = AuthController();
 
+
+
   File? _selectedImage;
 
   Future<void> _pickImageFromGallery()async{
@@ -108,14 +110,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   SizedBox(height: 20,),
                   ElevatedButton(
                       onPressed: ()async{
-                        return showDialog(
-                            useRootNavigator: true,
+                        return showModalBottomSheet(
                             context: context,
+                            enableDrag: true,
+                            useRootNavigator: true,
+                            isScrollControlled: true,
+                            isDismissible: true,
+                            useSafeArea: true,
                             builder: (context){
-                              return AlertDialog(
-                                backgroundColor: Colors.transparent,
-                                content: EditProfileWidget(),
-                              );
+                              return EditProfileWidget();
                             }
                         );
                       },

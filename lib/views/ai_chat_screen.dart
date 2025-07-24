@@ -57,7 +57,75 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
 
   Future<void> updateChatName(String id)async{
     try{
-      ref.read(sessionProvider.notifier).changeChatName(id, newChatName.text.trim());
+      showDialog(
+          context: context,
+          builder:(_)=> AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: newChatName,
+                  cursorColor: Theme.of(context).colorScheme.onSurface,
+                  decoration: InputDecoration(
+                    enabled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface)
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface)
+                    )
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)
+                          )
+                        ),
+                        child: Text(
+                          "Cancel",
+                          style: GoogleFonts.openSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),
+                        )
+                    ),
+                    SizedBox(width: 8,),
+                    TextButton(
+                        onPressed: (){
+                          ref.read(sessionProvider.notifier).changeChatName(id, newChatName.text.trim());
+                          Navigator.pop(context);
+                        },
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)
+                            )
+                        ),
+                        child: Text(
+                          "Save",
+                          style: GoogleFonts.openSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20
+                          ),
+                        )
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+      );
     }
     catch(e){
       print(e);
